@@ -67,3 +67,4 @@ def is_french(text_list: list) -> tuple:
         euclidean_difference_list.append(calculate_euclidean_difference(text))
     return euclidean_difference_list.index(min(euclidean_difference_list)), text_list[euclidean_difference_list.index(min(euclidean_difference_list))]
 
+
