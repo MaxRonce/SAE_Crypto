@@ -1,0 +1,3 @@
+text 4 = affine
+text 5 = vigenere ?
+text 2 = vigenere clé = livre
