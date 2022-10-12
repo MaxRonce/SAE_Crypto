@@ -11,12 +11,7 @@ anciennes par les services de la planète oubliée Alfolol. </br>
 Saurez-vous aider les services de Kaota à décrypter ces messages et trouver 
 leur provenance ? </br>
 
-Pour vous organiser, vous vous mettrez par groupes de 2, exceptionnellement de
-3, et essaierez de trouver les méthodes utilisées pour crypter ces messages.
-Vous devrez fournir un rapport expliquant votre démarche et fournir les codes 
-informatiques vous ayant conduit à ces conclusions. (langage au choix, la qualité 
-du code et les explications fournies seront déterminantes) </br>
-</br>
+
 **PS :** les messages sont listés dans les fichiers ``Texte1.txt ... Texte5.txt`` </br>
 ----------------------------
 ## Démarche suivie
