@@ -25,6 +25,6 @@ class Test_french(unittest.TestCase):
     def test_is_french(self):
         text_list = ["BONJOUR", "HELLO WORLD", "BONJOUR MONDE"]
         self.assertEqual(is_french(text_list)[1], "BONJOUR MONDE")
-        self.assertEqual(is_french(text_list)[0], 2)
+        self.assertEqual(is_french(text_list)[0], 3)
 
 
