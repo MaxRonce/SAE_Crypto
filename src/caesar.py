@@ -34,7 +34,8 @@ if __name__ == "__main__":
 
 
     text = "Oh kdoo g'hqwuhh gx fkdwhdx hwdlw vl judqg txh od pdlvrq ghv Gxuvohb dxudlw sx b whqlu wrxwhhqwlhuh hw oh sodirqg vl kdxw tx'rq duulydlw sdv d o'dshufhyrlu. Ghv wrufkhv hqiodpphhv hwdlhqwilahhv dxa pxuv gh slhuuh, frpph d Julqjrwwv, hw xq vrpswxhxa hvfdolhu gh pdueuh shuphwwdlwgh prqwhu gdqv ohv hwdjhv."
-    text = strip_puntuation(text)[0]
-    print(text)
-    print(len(caesar_decrypt_all(text)))
-    print(is_french(caesar_decrypt_all(text)))
+    text1 = strip_puntuation(text)[0]
+    print(text1)
+    
+    tmp = is_french(caesar_decrypt_all(text1))[1]
+    print(insert_punctuation(tmp, strip_puntuation(text)[1]))
