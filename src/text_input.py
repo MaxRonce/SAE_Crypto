@@ -18,7 +18,7 @@ def text_format(text_input : str) -> str:
         pass
     return str(text_input)
 
-def strip_puntuation(text: str) -> tuple[str, dict[int, Any]]:
+def strip_puntuation(text: str):
     """
     It takes a string, formats it, turns it into a list, makes a copy of the list, and then creates a dictionary of the
     punctuation and spaces in the original list. Then it removes the punctuation and spaces from the copy and returns the
@@ -115,14 +115,4 @@ def split_text(text: str, n: int) -> np.ndarray:
     text = np.array(text)
     return text
 
-texte = "Bonjour"
-texte = strip_puntuation(texte)
-print(texte)
-texte = insert_punctuation(texte[0], texte[1])
-print(texte)
-texte = text_to_number(texte)
-print(texte)
-texte = number_to_text(texte)
-print(texte)
-texte = split_text(texte,2)
-print(texte)
+

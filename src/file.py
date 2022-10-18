@@ -1,6 +1,6 @@
 import os
 import json
-import csv
+import numpy as np
 from text_input import *
 #abstract path of the parent folder
 
@@ -64,22 +64,48 @@ def clean_text(text: str, txt_number : int):
     return None
 
 
+def text_to_number(text: str, A_value : int) -> list:
+    """
+    It takes a string as input and returns a numpy array of integers
+    :param text: The text to be converted
+    :return: A numpy array of integers
+    """
+    if A_value == 0:
+        return np.array([ord(char)-65 for char in text])
+    else:
+        return np.array([ord(char)-(64) for char in text])
+def to_csv(file_path: str, data: str) -> None:
+    """
+    It takes a string and a list as input and write the list in a csv file
+    :param file_path: The path of the file to be written
+    :param data: The data to be written
+    :return: None
+    """
+    #use numpy to write the data in a csv file
+    np.savetxt(file_path, data, delimiter=",", fmt="%s")
+
+def from_csv(file_path: str):
+    """
+    It takes a string as input and returns a numpy array
+    :param file_path: The path of the file to be read
+    :return: A numpy array
+    """
+    return np.genfromtxt(file_path, delimiter=",").astype(int)
+
+
 if __name__ == "__main__":
     parent_path = get_parent_path()
-    file_path = os.path.join(parent_path, "out", "test.txt")
-    file_content = "Hello World!"
-    write_file(file_path, file_content)
 
-    print("hello")
+    # for i in range(1, 6):
+    #     text = open_file(parent_path + "/data/Texte" + str(i) + ".txt")
+    #     clean_text(text, i)
+    #
+    # for i in range(1, 6):
+    #     text = open_file(parent_path + "/data/Clean_text/Clean_text_" + str(i) + ".txt")
+    #     to_csv(parent_path + "/data/Text_Number/Number_" + str(i) + ".csv", text_to_number(text, 1))
+    #     print(text)
+    print(from_csv(parent_path + "/data/Text_Number/Number_4.csv"))
 
-    for i in range(1, 6):
-        text = open_file(parent_path + "/data/Texte" + str(i) + ".txt")
-        clean_text(text, i)
-
-    liste_of_text = ["Hello", "World", "How", "Are", "You"]
-    all_text_to_csv(liste_of_text, "test")
-
-    print(load_csv("test"))
 
 
 
