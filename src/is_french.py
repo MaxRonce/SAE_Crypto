@@ -1,5 +1,6 @@
 ALPHABET= "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+
 letter_occurence_dict = {"A" : 7.11, "B" : 1.14, "C" : 3.18, "D" : 3.67,
 "E" : 12.10, "F" : 1.11, "G" : 1.23, "H" : 1.11, "I" : 6.59, "J" : 0.34, "K" : 0.29,
 "L" : 4.96, "M" : 2.62, "N" : 6.39, "O" : 5.02, "P" : 2.49, "Q" : 0.65, "R" : 6.07,
@@ -67,4 +68,9 @@ def is_french(text_list: list) -> tuple:
         euclidean_difference_list.append(calculate_euclidean_difference(text))
     return euclidean_difference_list.index(min(euclidean_difference_list))+1, text_list[euclidean_difference_list.index(min(euclidean_difference_list))]
 
-
+def is_french_list(text_list: list) -> list:
+    #returns 5 most likely french texts
+    euclidean_difference_list = []
+    for text in text_list:
+        euclidean_difference_list.append(calculate_euclidean_difference(text))
+    return [text_list[euclidean_difference_list.index(min(euclidean_difference_list))], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[1])], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[2])], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[3])], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[4])]]

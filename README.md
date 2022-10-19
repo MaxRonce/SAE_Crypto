@@ -12,7 +12,9 @@ Saurez-vous aider les services de Kaota à décrypter ces messages et trouver
 leur provenance ? </br>
 
 
-**PS :** les messages sont listés dans les fichiers ``Texte1.txt ... Texte5.txt`` </br>
+
+### PS :les messages sont listés dans les fichiers ``Texte1.txt ... Texte5.txt`` </br>
+
 ----------------------------
 ## Démarche suivie
 
