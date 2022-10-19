@@ -1,9 +1,8 @@
 import numpy as np
 from numba import jit
-from numba.typed import List
 import time
+import is_french
 import file
-import multiprocessing
 
 
 def split_text(liste, N:int):
@@ -28,7 +27,7 @@ def split_text(liste, N:int):
 
 @jit(nopython=True)
 def create_matrix_list(start=1, end=26):
-    liste = np.array([[[i, j], [k, l]] for i in range(1, 26) for j in range(1, 26) for k in range(1, 26) for l in range(1, 26)])
+    liste = np.array([[[i, j], [k, l]] for i in range(0, 26) for j in range(0, 26) for k in range(0, 26) for l in range(0, 26)])
     return liste
 
 #multiply 2 matrix function, vectorize it with numba
@@ -86,22 +85,40 @@ def main():
         print("time to split the text: ", time.time() - start)
         result = []
         for j in range(len(matrix_list)):
-            result.append(unsplit_list(multiply_list_by_matrix(splitted, matrix_list[j])))
+            temp = unsplit_list(multiply_list_by_matrix(splitted, matrix_list[j]))
+            temp = list(map(lambda x: x%26, temp))
+            temp = file.number_to_text(temp, A_value=0)
+            result.append(temp)
 
         print("time to multiply the text by all matrix: ", time.time() - start)
-        file.to_csv(parent_path + f"/out/Hill/Number_{i}.csv",result)
+        file.to_csv(parent_path + f"/out/Hill/Text_as_letter{i}.csv",result)
         print("time to save the result: ", time.time() - start)
         print("TEXT NUMBER ", i, " DONE")
         print("---------------------------------------")
 
-    print("time to multiply the text by all matrix: ", time.time() - start)
+        print("time to multiply the text by all matrix: ", time.time() - start)
 
     #multiprocess the multiplication of the text by all the possible matrices
 
     start = time.time()
 
-
-
     print("time to multiply the text by all the possible matrices with multiprocessing: ", time.time() - start)
+
+def decrypt_hill():
+    #load the text csv
+    for i in range(1,6):
+        print("---------------------------------------")
+        start = time.time()
+        print(f"Text {i}")
+        parent_path = file.get_parent_path()
+        text_as_list = file.from_csv(parent_path + f"/out/Hill/Text_as_letter{i}.csv", type="str")
+        list_most_probable =  is_french.is_french_list(text_as_list)
+        for i in range(len(list_most_probable)):
+            print(list_most_probable[i])
+        print(f"Most probable solution for this text")
+        print("Time to decrypt the text: ", time.time() - start)
+
+
 if __name__ == "__main__":
     main()
+    decrypt_hill()

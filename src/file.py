@@ -1,6 +1,7 @@
 import os
 import json
 import numpy as np
+import csv
 from text_input import *
 #abstract path of the parent folder
 
@@ -74,6 +75,18 @@ def text_to_number(text: str, A_value : int) -> list:
         return np.array([ord(char)-65 for char in text])
     else:
         return np.array([ord(char)-(64) for char in text])
+
+def number_to_text(number: list, A_value : int) -> str:
+    """
+    It takes a list of integers as input and returns a string
+    :param number: The list of integers to be converted
+    :return: A string
+    """
+    if A_value == 0:
+        return "".join([chr(i+65) for i in number])
+    if A_value == 1:
+        return "".join([chr(i+64) for i in number])
+
 def to_csv(file_path: str, data: str) -> None:
     """
     It takes a string and a list as input and write the list in a csv file
@@ -84,13 +97,19 @@ def to_csv(file_path: str, data: str) -> None:
     #use numpy to write the data in a csv file
     np.savetxt(file_path, data, delimiter=",", fmt="%s")
 
-def from_csv(file_path: str):
+def from_csv(file_path: str, type = "int"):
     """
     It takes a string as input and returns a numpy array
     :param file_path: The path of the file to be read
     :return: A numpy array
     """
-    return np.genfromtxt(file_path, delimiter=",").astype(int)
+    if type == "int":
+        return np.loadtxt(file_path, delimiter=",", dtype=int)
+    if type == "str":
+        return np.loadtxt(file_path, delimiter=",", dtype=str)
+
+
+
 
 
 if __name__ == "__main__":
