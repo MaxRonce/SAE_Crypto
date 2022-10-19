@@ -21,7 +21,7 @@ def caesar_decrypt(text: str, key: int) -> str:
 #TODO fonction qui prend en para un txt -> test toutes les possibilités de clé et renvoie une liste de str contenant tous les txt déchiffrés
 def caesar_decrypt_all(text: str) -> list:
     """
-    It takes a string (no punctuation and UPPER) as input and returns a list of strings containing all the possible decrypted texts
+    It takes a string (no punctuation and UPPER) as input and returns the most likely to be french string and it's index in the list
     :param text: The text to be decrypted
     :return: A list of strings
     """
@@ -31,7 +31,4 @@ def caesar_decrypt_all(text: str) -> list:
         decrypted_text_list.append(caesar_decrypt(stripText, key+1))
     return insert_punctuation(is_french(decrypted_text_list)[1], strip_puntuation(text)[1])
 
-if __name__ == "__main__":
 
-    text = "Oh kdoo g'hqwuhh gx fkdwhdx hwdlw vl judqg txh od pdlvrq ghv Gxuvohb dxudlw sx b whqlu wrxwhhqwlhuh hw oh sodirqg vl kdxw tx'rq duulydlw sdv d o'dshufhyrlu. Ghv wrufkhv hqiodpphhv hwdlhqwilahhv dxa pxuv gh slhuuh, frpph d Julqjrwwv, hw xq vrpswxhxa hvfdolhu gh pdueuh shuphwwdlwgh prqwhu gdqv ohv hwdjhv."
-    print(caesar_decrypt_all(text))
