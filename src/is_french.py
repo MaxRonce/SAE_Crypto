@@ -1,3 +1,4 @@
+import numpy as np
 ALPHABET= "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
@@ -51,10 +52,10 @@ def calculate_euclidean_difference(text: str) -> float:
     letter_percentage_dict = calculate_percentage(text)
     euclidean_difference = 0
     for letter in ALPHABET:
-        euclidean_difference += (letter_percentage_dict[letter] - letter_occurence_dict[letter]) ** 2
-    return round(euclidean_difference ** 0.5, 2)
+        euclidean_difference += (letter_occurence_dict[letter] -letter_percentage_dict[letter]) ** 2
+    diff = np.sqrt(euclidean_difference)
+    return diff
 
-#TODO function is_french that takes a list of strings and returns the string that is the most likely to be french and it's index in the list,
 #using the euclidean difference function above as a metric and the strip_punctuation function from text_input.py
 
 def is_french(text_list: list) -> tuple:

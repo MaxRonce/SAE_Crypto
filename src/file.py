@@ -26,7 +26,10 @@ def open_file(file_path: str, return_type = "Text") -> str:
             return file.read()
     if return_type == "Json":
         with open(file_path, "r") as file:
-            return json.load(file)
+            dict = json.load(file)
+            #convert all dict keys to int
+            return {int(k):v for k,v in dict.items()}
+
 
 #function that take a string as input and write it in a file, if then file doesn't exist, it creates it into SAE_Crypto/out folder
 
