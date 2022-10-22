@@ -1,12 +1,15 @@
 import numpy as np
 ALPHABET= "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-
-letter_occurence_dict = {"A" : 7.11, "B" : 1.14, "C" : 3.18, "D" : 3.67,
-"E" : 12.10, "F" : 1.11, "G" : 1.23, "H" : 1.11, "I" : 6.59, "J" : 0.34, "K" : 0.29,
-"L" : 4.96, "M" : 2.62, "N" : 6.39, "O" : 5.02, "P" : 2.49, "Q" : 0.65, "R" : 6.07,
-"S" : 6.51, "T" : 5.92, "U" : 4.49, "V" : 1.11, "W" : 0.17, "X" : 0.32, "Y" : 0.46, "Z" : 0.15}
-
+letter_occurence_dict =  {
+    'A': 8.4, 'B': 1.06, 'C': 3.03, 'D': 4.18,
+    'E': 17.26, 'F': 1.12, 'G': 1.27, 'H': 0.92,
+    'I': 7.34, 'J': 0.31, 'K': 0.05, 'L': 6.01,
+    'M': 2.96, 'N': 7.13, 'O': 5.26, 'P': 3.01,
+    'Q': 0.99, 'R': 6.55, 'S': 8.08, 'T': 7.07,
+    'U': 5.74, 'V': 1.32, 'W': 0.04, 'X': 0.45,
+    'Y': 0.3, 'Z': 0.12
+}
 #count occurence of each letter in the given text
 
 def count_letters(text: str) -> dict:
@@ -33,11 +36,15 @@ def calculate_percentage(text: str) -> dict:
     :return: A dictionary with the letters of the alphabet as keys and the percentage of times they appear in the string as
     values
     """
-    letter_count_dict = count_letters(text)
-    letter_percentage_dict = {}
-    for letter in ALPHABET:
-        letter_percentage_dict[letter] = round((letter_count_dict[letter] / len(text)) * 100, 2)
-    return letter_percentage_dict
+    freq = {}
+    for lettre in ALPHABET:
+        freq[lettre] = 0.0
+    for lettre in text:
+        freq[lettre] += 1
+    for lettre in ALPHABET:
+        freq[lettre] /= len(text)
+    return freq
+
 
 #calculate the euclidean difference between the percentage of each letter in the given text and the percentage of each letter in the
 #french language
@@ -49,12 +56,11 @@ def calculate_euclidean_difference(text: str) -> float:
     :param text: The text to be counted
     :return: A float
     """
-    letter_percentage_dict = calculate_percentage(text)
-    euclidean_difference = 0
-    for letter in ALPHABET:
-        euclidean_difference += (letter_occurence_dict[letter] -letter_percentage_dict[letter]) ** 2
-    diff = np.sqrt(euclidean_difference)
-    return diff
+    euclidean_difference = 0.0
+    freq = calculate_percentage(text)
+    for lettre in ALPHABET:
+        euclidean_difference += (freq[lettre] - letter_occurence_dict[lettre])**2
+    return np.sqrt(euclidean_difference)
 
 #using the euclidean difference function above as a metric and the strip_punctuation function from text_input.py
 
@@ -68,10 +74,3 @@ def is_french(text_list: list) -> tuple:
     for text in text_list:
         euclidean_difference_list.append(calculate_euclidean_difference(text))
     return euclidean_difference_list.index(min(euclidean_difference_list))+1, text_list[euclidean_difference_list.index(min(euclidean_difference_list))]
-
-def is_french_list(text_list: list) -> list:
-    #returns 5 most likely french texts
-    euclidean_difference_list = []
-    for text in text_list:
-        euclidean_difference_list.append(calculate_euclidean_difference(text))
-    return [text_list[euclidean_difference_list.index(min(euclidean_difference_list))], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[1])], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[2])], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[3])], text_list[euclidean_difference_list.index(sorted(euclidean_difference_list)[4])]]

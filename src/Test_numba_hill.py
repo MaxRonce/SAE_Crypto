@@ -1,8 +1,10 @@
 import numpy as np
 from numba import jit
+from numba.typed import List
 import time
-import is_french
 import file
+import is_french
+import multiprocessing
 
 
 def split_text(liste, N:int):
@@ -56,6 +58,22 @@ def pgcd(a, b):
 def unsplit_list(liste):
     return [item for sublist in liste for item in sublist]
 
+#function that calculate the modular inverse of a matrix
+
+def mod_inv(number):
+    for i in range(1, 26):
+        if (i * number) % 26 == 1:
+            return i
+
+def mod_inverse(matrix):
+    result = np.zeros((2,2))
+    det = np.linalg.det(matrix)
+    result[0][0] = mod_inv(det) * matrix[1][1] % 26
+    result[0][1] = mod_inv(det) * -matrix[0][1] % 26
+    result[1][0] = mod_inv(det) * -matrix[1][0] % 26
+    result[1][1] = mod_inv(det) * matrix[0][0] % 26
+    return result
+
 def main():
     parent_path = file.get_parent_path()
     #create a list of all the possible matrices 2x2 in Z/26Z
@@ -69,6 +87,9 @@ def main():
     #strip the matrix list to keep only the invertible matrices
     start = time.time()
     matrix_list = np.array(list(filter(lambda x: pgcd(np.linalg.det(x), 26) == 1, matrix_list)))
+    #list of all inverses mod 26 of the matrix in matrix_list
+    inverse_matrix_list = np.array(list(map(lambda x: mod_inverse(x), matrix_list)))
+    matrix_list = inverse_matrix_list
     print(f"Number of invertible matrix generated : {len(matrix_list)}")
     print("Time to create the invertible matrix list: ", time.time() - start)
 
@@ -85,40 +106,35 @@ def main():
         print("time to split the text: ", time.time() - start)
         result = []
         for j in range(len(matrix_list)):
-            temp = unsplit_list(multiply_list_by_matrix(splitted, matrix_list[j]))
-            temp = list(map(lambda x: x%26, temp))
-            temp = file.number_to_text(temp, A_value=0)
-            result.append(temp)
+            result.append(unsplit_list(multiply_list_by_matrix(splitted, matrix_list[j])))
 
         print("time to multiply the text by all matrix: ", time.time() - start)
-        file.to_csv(parent_path + f"/out/Hill/Text_as_letter{i}.csv",result)
+        file.to_csv(parent_path + f"/out/Hill/Number_{i}.csv",result)
         print("time to save the result: ", time.time() - start)
         print("TEXT NUMBER ", i, " DONE")
         print("---------------------------------------")
 
-        print("time to multiply the text by all matrix: ", time.time() - start)
+    print("time to multiply the text by all matrix: ", time.time() - start)
 
     #multiprocess the multiplication of the text by all the possible matrices
 
     start = time.time()
 
-    print("time to multiply the text by all the possible matrices with multiprocessing: ", time.time() - start)
-
 def decrypt_hill():
-    #load the text csv
-    for i in range(1,6):
+    # load the text csv
+    for i in range(1, 6):
         print("---------------------------------------")
         start = time.time()
         print(f"Text {i}")
         parent_path = file.get_parent_path()
         text_as_list = file.from_csv(parent_path + f"/out/Hill/Text_as_letter{i}.csv", type="str")
-        list_most_probable =  is_french.is_french_list(text_as_list)
+        list_most_probable = is_french.is_french_list(text_as_list)
         for i in range(len(list_most_probable)):
             print(list_most_probable[i])
         print(f"Most probable solution for this text")
         print("Time to decrypt the text: ", time.time() - start)
 
-
+    print("time to multiply the text by all the possible matrices with multiprocessing: ", time.time() - start)
 if __name__ == "__main__":
-    main()
     decrypt_hill()
+    main()

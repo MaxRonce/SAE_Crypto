@@ -74,7 +74,7 @@ def text_to_number(text: str) -> np.ndarray:
     text = np.array(text)
     return text
 #convert a numpy array of number into a text
-def number_to_text(text: np.ndarray) -> str:
+def number_to_text(text) -> str:
     """
     It takes a numpy array of numbers as input and returns a string
     :param text: The numpy array of numbers to be converted
