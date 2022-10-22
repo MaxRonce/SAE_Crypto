@@ -1,6 +1,7 @@
 
 from text_input import strip_puntuation, insert_punctuation, text_format
 from is_french import is_french
+from file import *
 
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 #TODO fonction qui prend en para un txt -> str sans ponctu ni espace en maj, déchiffre avec un chiffrage cesar avec une clé donnée
@@ -33,5 +34,6 @@ def caesar_decrypt_all(text: str) -> list:
 
 if __name__ == "__main__":
 
-    text = "Oh kdoo g'hqwuhh gx fkdwhdx hwdlw vl judqg txh od pdlvrq ghv Gxuvohb dxudlw sx b whqlu wrxwhhqwlhuh hw oh sodirqg vl kdxw tx'rq duulydlw sdv d o'dshufhyrlu. Ghv wrufkhv hqiodpphhv hwdlhqwilahhv dxa pxuv gh slhuuh, frpph d Julqjrwwv, hw xq vrpswxhxa hvfdolhu gh pdueuh shuphwwdlwgh prqwhu gdqv ohv hwdjhv."
-    print(caesar_decrypt_all(text))
+    text4 = "Zc krgfkr u'le ufzxk le rzi drikzrc jli c'fscfex tyrjjzj ul mrjzjkrj. Zc flmizk jfe wizxf dlirc, zc gizk ul crzk wifzu, zc slk le xireu sfc. Zc j'rgrzjrzk. Zc j'rjjzk jli jfe tfjp, zc gizk le aflierc hl'zc gritflilk u'le rzi uzjkirzk. Zc rccldr le tzxrizccf hl'zc wldr aljhl'rl sflk hlfzhl'zc kiflmrk jfe griwld ziizkrek. Zc kfljjr."
+    print(caesar_decrypt_all(text4))
+

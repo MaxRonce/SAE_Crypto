@@ -38,12 +38,12 @@ def calculate_percentage(text: str) -> dict:
     return letter_percentage_dict
 
 #calculate the euclidean difference between the percentage of each letter in the given text and the percentage of each letter in the
-#french language
+#french.txt language
 
 def calculate_euclidean_difference(text: str) -> float:
     """
     It takes a string (no punctuation and UPPER) as input and returns the euclidean difference between the percentage of each letter in the given
-    text and the percentage of each letter in the french language
+    text and the percentage of each letter in the french.txt language
     :param text: The text to be counted
     :return: A float
     """
@@ -53,14 +53,14 @@ def calculate_euclidean_difference(text: str) -> float:
         euclidean_difference += (letter_percentage_dict[letter] - letter_occurence_dict[letter]) ** 2
     return round(euclidean_difference ** 0.5, 2)
 
-#TODO function is_french that takes a list of strings and returns the string that is the most likely to be french and it's index in the list,
+#TODO function is_french that takes a list of strings and returns the string that is the most likely to be french.txt and it's index in the list,
 #using the euclidean difference function above as a metric and the strip_punctuation function from text_input.py
 
 def is_french(text_list: list) -> tuple:
     """
-    It takes a list of strings as input and returns the string that is the most likely to be french and it's index in the list
+    It takes a list of strings as input and returns the string that is the most likely to be french.txt and it's index in the list
     :param text_list: The list of strings to be checked
-    :return: A tuple with the index of the string that is the most likely to be french and the string itself
+    :return: A tuple with the index of the string that is the most likely to be french.txt and the string itself
     """
     euclidean_difference_list = []
     for text in text_list:

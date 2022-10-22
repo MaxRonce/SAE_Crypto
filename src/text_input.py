@@ -18,7 +18,7 @@ def text_format(text_input : str) -> str:
         pass
     return str(text_input)
 
-def strip_puntuation(text: str) -> tuple[str, dict[int, Any]]:
+def strip_puntuation(text: str, mode:str = 'default') -> tuple[str, dict[int, Any]]:
     """
     It takes a string, formats it, turns it into a list, makes a copy of the list, and then creates a dictionary of the
     punctuation and spaces in the original list. Then it removes the punctuation and spaces from the copy and returns the
@@ -29,13 +29,16 @@ def strip_puntuation(text: str) -> tuple[str, dict[int, Any]]:
     :return: A tuple with the first element being the string without punctuation and the second element being a dictionary
     with the punctuation and spaces as keys and the punctuation and spaces as values.
     """
+
     text = text_format(text)
     text = list(text)
     text_copy = text
     dic_text = {}
-
+    removed_punctuation = string.punctuation
+    if mode == 'default':
+        removed_punctuation += " "
     for i in range(len(text)):
-        if text[i] in string.punctuation+" ":
+        if text[i] in removed_punctuation:
             dic_text[i] = text[i]
     for i in dic_text.values():
         text_copy.remove(i)
@@ -57,3 +60,5 @@ def insert_punctuation(text: str, dic: dict) -> str:
     for i in dic.keys():
         text.insert(i, dic[i])
     return "".join(text)
+
+
