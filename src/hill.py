@@ -33,7 +33,7 @@ def inverse(matrix):
     c = matrix[1][0]
     d = matrix[1][1]
     return [[d, -b], [-c, a]]
-@jit(nopython=True)
+
 def modinv(a, m):
     """
     It takes two integers as input and returns the modular inverse of a mod m
@@ -44,14 +44,14 @@ def modinv(a, m):
     for x in range(1, m):
         if (a*x) % m == 1:
             return x
-@jit(nopython=True)
+
 def pgcd(a, b):
     if b == 0:
         return a
     else:
         return pgcd(b, a%b)
 
-@jit(nopython=True)
+
 def split_text(text):
 
     if len(text)%2 == 1:

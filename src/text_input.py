@@ -1,4 +1,4 @@
-from typing import Tuple, Dict, Any
+
 import numpy as np
 import unidecode
 import string
@@ -97,22 +97,5 @@ def flatten_array(array: np.ndarray) -> np.ndarray:
     array = array.flatten()
     return array
 
-#split a text into an array of n-sized arrays, if the text is not a multiple of n, the last array will be padded with 0
-
-def split_text(text: str, n: int) -> np.ndarray:
-    """
-    It takes a string and an integer as input and returns a numpy array of arrays
-
-    :param text: The text to be split
-    :param n: The length of the arrays
-    :return: A numpy array of arrays
-    """
-    text = text_to_number(text)
-    if text.size % n != 0:
-        text = np.append(text, np.zeros(n - text.size % n))
-    text = np.array_split(text, len(text) / n)
-    text = np.array(list(map(lambda x: x.astype(int), text)))
-    text = np.array(text)
-    return text
 
 
