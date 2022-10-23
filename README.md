@@ -32,10 +32,9 @@ Nous allons simplement "Brute Force", afin de trouver le texte déchiffré et la
 pour chaque message. </br>
 Nous avons donc implémenté une fonction qui va tester toutes les méthodes de déchiffrement. </br>
 Puis pour chaque méthode, nous allons tester toutes les clés possibles. </br>
-Pour chaque clé, nous allons déchiffrer le message et calculer la fréquence des lettres. </br>
-Enfin, nous allons comparer la fréquence des lettres du message déchiffré avec la fréquence des lettres
-du français. </br> 
-Et ainsi récupérer le texte le plus probable d'être le texte déchiffré en français. </br>
+Pour chaque clé, nous allons déchiffrer le message et la fréquence d'apparition des lettres. </br>
+Enfin, nous allons comparer cette fréquence avec les occurences moyennes d'un texte en français.
+Et ainsi en déduire le texte qui a la meilleure probabilité d'être en clair. </br>
 
 ----------------------------
 ## Requirements
@@ -53,7 +52,7 @@ Et ainsi récupérer le texte le plus probable d'être le texte déchiffré en f
 ----------------------------
 
 ## Résultats
-Tout les résulats sont trouvables dans le dossier ``out/Text_i_decrypted``  une fois le programme lancé une première fois correctement</br>
+Tout les résulats sont disponibles dans le dossier ``out/Text_i_decrypted``  une fois le programme lancé une première fois correctement</br>
 
 ### Texte 1
 
@@ -100,7 +99,7 @@ Permet de formater le texte en entrée, retire les accents en les convertissants
 ````python
 def strip_puntuation(text: str):
 ````
-Permet de retirer la ponctuation du texte en , et la retourne dans un
+Permet de retirer la ponctuation du texte, et la retourne dans un
 dictionnaire, la clé est l'index dans le texte du caractère retiré
 ```Exemple : strip_punctuation("Hello World!!) -> ('HELLOWORLD', {5: ' ', 11: ' ', 12: '!', 13: '!'}) ```</br>
 
@@ -120,50 +119,50 @@ Prend une liste de texte, et retourne un tuple contenant le texte le plus probab
 def calculate_euclidean_difference(text: str) -> float:
 ````
 
-Prend un text, utilise la fonction ``calculate_percentage(text: str) -> dict:`` pour calculer la fréquence des lettres dans le texte, puis retourne la différence euclidienne entre la fréquence des lettres du texte et la fréquence des lettres du français.</br>
+Prend un texte, utilise la fonction ``calculate_percentage(text: str) -> dict:`` pour calculer la fréquence des lettres dans le texte, puis retourne la différence euclidienne entre la fréquence des lettres du texte et la fréquence des lettres du français.</br>
 
 
 ### file.py
 Ce fichier contient des fonctions permettant de lire et écrire dans des fichiers.</br>
-Notament stocker la ponctuation des différents textes dans des fichiers ``.json``</br>
+Notamment stocker la ponctuation des différents textes dans des fichiers ``.json``</br>
 
 ### file.py
 
 ## Fonctionnement des différents déchiffrements
 
-Les différentes méthodes de déchiffrement sont appelés dans la fonction ``main()`` du fichier ``main.py``</br>
-Les méthodes de déchiffrement sont appelés dans l'order suivant : </br>
+Les différentes méthodes de déchiffrement sont appelées dans la fonction ``main()`` du fichier ``main.py``</br>
+Les méthodes de déchiffrement sont appelées dans l'ordre suivant : </br>
 - Caesar
 - Affine
 - Vigenere
 - Hill
 - Substitution
 
-L'ordre d'appel est défini par le temps de calcul de chaque méthode, en éliminant des méthodes a chaque texte déchiffré, les plus longues à calculer sont appliqués a un nombre de texte restant plus faible.</br>
+L'ordre d'appel est défini par le temps de calcul de chaque méthode, en éliminant des méthodes à chaque texte déchiffré, les plus longues à calculer 
+sont appliquées à un nombre de texte restant plus faible.</br>
 
-Etant donné que les textes donnés sont plutôt cours, certains méthodes de 
-déchiffrement présentent des incertitudes lors de l'utilisation d'attaque statistique 
-sur ces derniers, ainsi avec des textes plus long il serait possible de déterminer automatiquement quel est le texte 
-Français et chiffré avec quelle méthode.
-Afin de contrer ce problème, la fonction main demande une petite intervention humaine, ou il est demandé a l'utilisateurs
-de choisir entre n textes restants tirés des n fichiers restants a déchiffrer, quel est celui en Français</br>
+Etant donné que les textes donnés sont plutôt cours, certaines méthodes de 
+déchiffrement présentent des incertitudes lors de l'utilisation d'attaques statistiques
+sur les texte. Ainsi avec des textes plus long, il serait possible de déterminer automatiquement quel est le texte 
+Français et quelle méthode de chiffrement.
+Afin de contrer ce problème, la fonction ````main```` demande une petite intervention humaine, où il est demandé à l'utilisateur
+de choisir entre ````n```` textes restants tirés des  ````n```` fichiers restants à déchiffrer, quel est celui en français</br>
 
 ### Caesar
 
 Un texte chiffré par un décalage de C, est un texte où chaque lettre est décalée de C caractères dans l'alphabet.</br>
 Il y a donc au maximum 26 possibilités de décalage, et donc 26 possibilités de texte déchiffré.</br>
-La façon la plus rapide de forcer un chiffrement de César est de tester toutes les possibilités</br>
-Puis de faire un attaque statistique sur les textes déchiffrés, en effectuant une différence euclidienne entre la fréquence des lettres du texte déchiffré et la fréquence des lettres du français.</br> 
-Les fonctions étant très facile a comprendre, elles ne sont pas plus détaillées que dans le docstring
+La façon la plus rapide de forcer un chiffrement de Caesar est de tester toutes les possibilités, puis de faire une attaque statistique sur les textes déchiffrés, en effectuant une différence euclidienne entre la fréquence des lettres du texte déchiffré et la fréquence des lettres du français.</br> 
+Les fonctions étant très faciles à comprendre, elles ne sont pas plus détaillées que dans le docstring.
 ### Affine
 
-La méthode d'attaque de l'affine est similaire à celle du César, sauf que le décalage est calculé par la formule suivante : </br>
+La méthode d'attaque du chiffrement Affine est similaire à celle du chiffrement Caesar, sauf que le décalage est calculé par la formule suivante : </br>
 ``
 x = (a * y + b) mod 26
 ``</br>
-Il y a donc au maximum 26 * 26 possibilités de décalage (légèrement moins si l'on soustrait les valeurs ne permettant pas de déchiffre)
+Il y a donc au maximum 26 * 26 possibilités de décalage (légèrement moins si l'on soustrait les valeurs ne permettant pas de déchiffrer.)
 Cependant faire une vérification des valeurs de a et b est plus couteux en ressource que bruteforce</br>
-Les fonctions étant très facile a comprendre, elles ne sont pas plus détaillées que dans le docstring
+Les fonctions étant très faciles à comprendre, elles ne sont pas plus détaillées que dans le docstring.
 
 ### Vigenere
 
@@ -180,11 +179,10 @@ Cependant, il est possible de faire une attaque statistique sur les textes chiff
 ##### Indice de coïncidence
 Formule : 
 $\sum_{i=A} \frac{n_i (n_i -1)}{N(N-1)}$
-avec $n_i$ le nombre d'occurence de la lettre $i$ dans le texte, et $N$ le nombre total de lettre dans le texte
-allant de A à Z</br>
+avec $n_i$ le nombre d'occurence de la lettre $i$ dans le texte, et $N$ le nombre total de lettre dans le texte</br>
 
-Il suffit alors de calculer l'indice de coincidence pour plusieurs subtextes de longueur différente,
-puis de choisir la valeur $I_c$ maximum
+Il suffit alors de calculer l'indice de coincidence pour plusieurs sous-textes de longueurs différentes,
+puis de choisir la valeur $I_c$ maximum.
 
 ##### Trouver la clé
 
@@ -195,32 +193,33 @@ Dans la fonction :
 def group_text(text: str, key_length: int) -> list:
 ````
 
-Ensuite pour chaque groupe de lettre, on effectue une attaque de César, et on garde le groupe avec la plus petite différence euclidienne avec la fréquence des lettres du français.</br>
+Ensuite pour chaque groupe de lettre, on effectue une attaque de Caesar, et on garde le groupe avec la plus petite différence euclidienne avec la fréquence des lettres du français.</br>
 
 On utilise ensuite la fonction afin de trouver la clé : 
 ````python
 def find_key_frequency_vigenere(text, key_length):
 ````
 
-Une fois la clé trouvée, il ne reste plus qu'a utiliser la fonction 
+Une fois la clé trouvée, il ne reste plus qu'à utiliser la fonction :
 ```python
 def key_schedule(message: str, key: str)->list:
 ``` 
 Permettant ainsi d'adapter
-la clé a la longueur du texte, puis de déchiffrer le texte avec la clé trouvée en soustrayant la valeur de chaque Lettre a chaque Lettre du texte (modulo 26).
+la clé à la longueur du texte, puis de déchiffrer le texte avec la clé trouvée en soustrayant la valeur de chaque lettre à chaque lettre du texte (modulo 26).
 
 ### Hill
 
 Le chiffrement de Hill est également un chiffrement polyalphabétique, mais il est encore plus complexe que le chiffrement de Vigenère.
 Ici dans notre cas, la clé est une matrice carrée $M_{2,2}$, ce qui limite les possibilités.
-Afin d'opérer, il est nécéssaire de découper le texte en bloc de 2 lettres. Si la longueur du texte est impaire, on rajoute une lettre au denier bloc, a l'aide de la fonction
+Afin d'opérer, il est nécessaire de découper le texte en bloc de 2 lettres. Si la longueur du texte est impaire, on rajoute une 
+lettre au denier bloc, à l'aide de la fonction
 </br>
 ````python
 def split_text(text):
 ````
 On transforme ensuite chaque lettre en nombre.</br>
 
-Soit $G le groupe contenant toutes les matrices dans Z/26Z$, on peux au maximum avoir $26^4 = 456 976$ matrices uniques dans $G$</br>
+Soit $G le groupe contenant toutes les matrices dans Z/26Z, on peux au maximum avoir $26^4 = 456 976$ matrices uniques dans $G$</br>
 On génère alors la liste de toutes les matrices possibles avec la fonction : 
 ````python
 def create_matrix_list():
@@ -228,75 +227,109 @@ def create_matrix_list():
     return liste
 ````
 Il serait possible de tester toutes les possibilités, mais cela demanderait beaucoup trop de ressources.</br>
-Une matrice peut etre utiliser pour chiffrer un texte si et seulement si elle est inversible modulo 26.</br>
+Une matrice peut-être utilisée pour chiffrer un texte si et seulement si elle est inversible modulo 26.</br>
 CAD si et seulement si son déterminant est premier avec 26.</br>
 
-On filtre alors toutes les matrices qui ne respèctent pas cette condition : 
+On filtre alors toutes les matrices qui ne respectent pas cette condition : 
 ````python
 matrix_list = [i for i in all_matrix if pgcd(determinant(i), 26) == 1]
 ````
 
-Ce qui nous laisse alors 157 252 matrices inversibles (démontrable via le théorème des restes Chinois)</br>
+Ce qui nous laisse alors 157 252 matrices inversibles (démontrable via le théorème des restes chinois)</br>
 
-A partir de maintenant, on peut tester toutes les possibilités, et l'on garde le texte qui a la distance euclidienne entre l'occurence de ses lettres et celle du français la plus faible</br>
+A partir de maintenant, on peut tester toutes les possibilités, et l'on garde le texte qui a la distance euclidienne entre
+l'occurence de ses lettres et celle du français la plus faible.</br>
 
-NB : Beaucoup de fonctions sont utilisés dans ce programme, et sont détaillées dans leurs docstring respectifs.
-La grande majorité de ces fonctions servent uniquement a effectuer des opérations sur le texte, les liste, ou calculer un inverse modulaire.
+NB : Beaucoup de fonctions sont utilisées dans ce programme, et sont détaillées dans leurs docstring respectifs.
+La grande majorité de ces fonctions servent uniquement à effectuer des opérations sur le texte, les listes ou à calculer un inverse modulaire.
 
-#### Optimisation
+### Substitution
+
+Le chiffrement par substitution est lui aussi un chiffrement polyalphabétique, mais celui-ci est à la fois complexe et simple.
+Car son fonctionnement repose sur le fait de changer la place des lettres de l’alphabet, c’est à dire que par exemple pour un texte normal sa clé serait : 
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Alors que lorsque l’on crypte un message par substitution sa clé peut devenir par exemple :
+TNICKMXQYFESZPHVOGRLJBUDWA
+
+On peut donc se dire que : décrypter un message chiffré par substitution est plutôt simple car il suffirait d’essayer pour
+chaque clé possible de traduire le texte puis de comparer les taux d’apparition des lettres dans
+chaque texte et de prendre celui où le taux ressemble le plus à celui de la langue française.
+
+Malheureusement le nombre possible de clés est énorme, il est de 26!, cela fait donc beaucoup trop. 
+
+Nous allons ici avoir une approche différente, nous allons comparer les paterne des mots afin de comparer avec les paternes
+de la langue française et pouvoir ainsi en ressortir un dictionnaire qui pour chaque lettre de l’alphabet sortira celles qui pourraient
+leurs être substituées. 
+
+Pour le moment nous avons simplement pu créer un dictionnaire qui stocke tous les paternes de la langue française.
+
+La fonction : split_text, permet de récupérer un texte en paramètre et renvoie une liste de 20 mots aléatoires
+du texte en majuscule et sans ponctuation.
+
+La fonction get_pattern_list récupère la liste de mots précédemment créés et renvoie une liste des paternes de ces différents mots :
+par exemple pour le mot CHOISIR, le paterne sera : 0.1.2.3.4.3.5
+
+Puis la fonction compare_pattern, récupère cette liste de paternes et renvoie un dictionnaire qui,
+pour chaque paterne de la liste, lui attribue les mots de la langue française avec le même paterne. 
+
+NB : l'ensemble du code de la fonction susbtitution est trouvable dans le fichier substitution.py, et ses dépendances dans /data.
+Cependant le programme ne fonctionne pas encore correctement, et nous n'avons pas eu le temps de le finir, il n'est donc pas implémenté
+dans le main.py.
+
+### Optimisation
 
 Effectuer une attaque de Hill est très couteux en ressource, et il est donc nécessaire d'optimiser le programme.
-Pour ce faire, la majorité des opérations sont effectués un minimum de fois, et les résultats sont stockés dans des variables afin d'éviter de les recalculer.</br>
+Pour ce faire, la majorité des opérations sont effectuées un minimum de fois, et les résultats sont stockés dans des variables afin d'éviter de les recalculer.</br>
 De plus numpy a été utilisé au maximum afin d'optimiser les temps de calculs.</br>
-Dans la pluspart des cas, les fonctions numpy sont plus rapide que les fonctions python classiques.</br>
-Cependant pour certains cas, étant donné que les matrices sont des 2x2, il est plus rapide d'utiliser des fonctions en python classique(vectorisés) que des fonctions numpy.</br>
-Et dans le cas ou il n'y avait pas le choix, des génératrices de list ou des map ont été utilisés afin de gagner en performance.</br>
-Enfin, comme évoqué précédement certaines fonctions d'opérations sur les matrices sont vectorisées a l'aide de Numba ````@jit(nopython=True)````, ce qui permet d'optimiser encore plus les temps de calculs.</br>
+Dans la plupart des cas, les fonctions numpy sont plus rapides que les fonctions python classiques.</br>
+Cependant pour certains cas, étant donné que les matrices sont des 2x2, il est plus rapide d'utiliser des fonctions en python classique (vectorisés) que des fonctions numpy.</br>
+Et dans le cas ou il n'y a pas le choix, des génératrices de listes ou des map ont été utilisés afin de gagner en performance.</br>
+Enfin, comme évoqué précédement certaines fonctions d'opérations sur les matrices sont vectorisées à l'aide de Numba ````@jit(nopython=True)````, ce qui permet d'optimiser encore plus les temps de calculs.</br>
 
-**IMPORTANT** Si le programe ne se lance pas correctement (notamment a cause de numba), décommenter la ligne 7 du fichier ``main.py`` et commenter la ligne 6. </br>
+**IMPORTANT** Si le programe ne se lance pas correctement (notamment à cause de numba), retirer le commentaire de la ligne 7 du fichier ``main.py`` et commenter la ligne 6. </br>
 Cela permettra d'effectuer les calculs sans optimisation, mais cela sera beaucoup plus long.
 
 ### Bonus
 #### Temps de calculs
 
-Les 3 premiers algorithmes ne sont que très peu coutueux en ressources, et peuvent donc être executés en quelques secondes.</br>
-Le chiffrement de Hill est beaucoup plus couteux, et peut prendre jusqu'a 10 minutes dans le pire des cas.</br>
+Les 3 premiers algorithmes ne sont que très peu couteux en ressources, et peuvent donc être exécutés en quelques secondes.</br>
+Le chiffrement de Hill est beaucoup plus couteux, et peut prendre jusqu'à 10 minutes dans le pire des cas.</br>
 
 Chiffres obtenus sur un ordinateur portable avec la configuration suivante :
 - AMD Ryzen 5 4600H 3.5 GHz
 - 16 Go de RAM
 
-Le reste de la configuration n'est pas nécessaire pour l'execution du programme.
+Le reste de la configuration n'est pas nécessaire pour l'exécution du programme.
 
-Mesure effectuée avec la fonction ``start = time.time()`` de python avant la fonction a mesurer, ``end = time.time()`` après la fonction.
-puis ``end - start`` </br>
+Mesure effectuée avec la fonction ``start = time.time()`` de python avant la fonction à mesurer, puis ``end = time.time()`` après la fonction.
+Et enfin ``end - start`` </br>
 
-Temps moyen d'execution pour ```hill_optimised``` :
+Temps moyen d'exécution pour ```hill_optimised``` :
 - 14.47747015953064 secondes
 
-Temps moyen d'execution pour ```hill_optimised``` sans vectorisation (Numba) :
+Temps moyen d'exécution pour ```hill_optimised``` sans vectorisation (Numba) :
 - 30.21728128129817 secondes
 
-Temps moyen d'execution pour ```hill``` :
+Temps moyen d'exécution pour ```hill``` :
 - 50.257126569747925 secondes
 
 Autres temps : 
-Afin d'essayer de gagner du temps de calculs, j'ai essayé de diviser la liste contenant toutes les matrices en plusieurs parties égales, puis de 
-multi-process, afin de tester toutes les possibilités en parallèle.
-Cependant, il faut justifier l'utilisation de plusieurs process, et dans ce cas, il y a certes un gain de temps sur l'execution des fonctions, mais
-la création des process se répercute sur le temps d'execution total, et le gain n'est pas significatif.
+Afin d'essayer de gagner du temps de calculs, j'ai essayé de diviser la liste contenant toutes les matrices en plusieurs parties égales, puis de faire du 
+multi-processing, afin de tester toutes les possibilités en parallèle.
+Cependant, il faut justifier l'utilisation de plusieurs process, et dans ce cas, il y a certes un gain de temps sur l'exécution des fonctions, mais
+la création des process se répercute sur le temps d'exécution total, et le gain n'est pas significatif.
 
-Temps d'execution pour ```hill_optimised``` avec 2 threads :
+Temps d'exécution pour ```hill_optimised``` avec 2 threads :
 - 7.94100022315979 secondes </br>
 
 Temps de création des process : 6.281298875808716 secondes</br>
 
-Temps d'execution pour ```hill_optimised``` avec 4 threads :
+Temps d'exécution pour ```hill_optimised``` avec 4 threads :
 - 2.5492501258850098 secondes</br>
 
 Temps de création des process : 12.76021988756021 secondes</br>
 
-Temps d'execution pour ```hill_optimised``` avec 8 threads :
+Temps d'exécution pour ```hill_optimised``` avec 8 threads :
 - 2.5492501258850098 secondes</br>
 
 Temps de création des process : 20.89210219099219 secondes</br>

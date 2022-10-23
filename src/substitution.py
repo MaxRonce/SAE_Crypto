@@ -1,37 +1,48 @@
-ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-import itertools
-#substitution cipher for a given text and key(dictionnary)
 
-def encrypt_substitution(text: str, key: dict) -> str:
-    """
-    It takes a string and a dictionnary as input and returns the encrypted string
-    :param text: The text to be encrypted
-    :param key: The dictionnary that contains the key
-    :return: The encrypted string
-    """
-    text = list(text)
-    for i in range(len(text)):
-        if text[i] in ALPHABET:
-            text[i] = key[text[i]]
-    return "".join(text)
+from text_input import strip_puntuation, insert_punctuation, text_format
+from is_french import *
+import random
+from MakerWordPattern import *
+import SAE_Crypto.data.WordPattern as wp
 
 
-#test all possible keys for a given text
+def split_text(text)-> list[str]:
+    '''return a list of 20 random words from the text'''
+    text = text_format(text)
+    text = strip_puntuation(text, mode='substi')[0]
+    text = text.split()
 
-def test_all_keys(text: str) -> list:
-    """
-    It takes a string as input and returns a list of all possible keys
-    :param text: The text to be tested
-    :return: A list of all possible keys
-    """
-    key_list = []
-    for key in itertools.permutations(ALPHABET):
-        print(key)
-        key_dict = dict(zip(ALPHABET, key))
-        key_list.append(key_dict)
-    return key_list
-
-test_all_keys("ABC")
+    list_words = []
+    for i in range(20):
+        list_words.append(random.choice(text))
+    return list_words
 
 
+def get_pattern_list (word_list:list[str]) -> None:
+    listpattern = []
+    for word in word_list:
+        if get_word_pattern(word) not in listpattern:
+            listpattern.append(get_word_pattern(word))
+    return listpattern
 
+
+def compare_pattern (pattern_list:list[str]) -> dict[str, list[str]]:
+    patterns = {}
+    for pattern in pattern_list:
+        for word in wp.allPatterns:
+            if pattern == word:
+                patterns[word] = wp.allPatterns[word]
+    return patterns
+
+
+
+def main():
+    tmp = split_text("Os dom sb kbrog : wf bok bykg-ewzbof ywm lwoxo r'wf zglmgf, hwol wf mbfug, hwol wf ygv-mkgm, hwol wf egmossgf dol bw ugwm rw pgwk. Rwmkgfe eibfmb rw Sbfndbff, Zbkzbkb wf dbrkoubs r'Bkbugf, Lmoei-Kbfrbss wf bok r' Borb.")
+    print(get_pattern_list(tmp))
+    #print(text_format("hello world"))
+    #print(strip_puntuation("hello world"))
+    print(compare_pattern(get_pattern_list(tmp)))
+
+
+if __name__ == '__main__':
+    main()
