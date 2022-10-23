@@ -302,7 +302,15 @@ Temps d'execution pour ```hill_optimised``` avec 8 threads :
 Temps de création des process : 20.89210219099219 secondes</br>
 
 
+## Sources : 
 
+[1].Chris Christenses (2015).Polygraphic Substitution Cipher : The Hill Cipher, II [En ligne] Disponible : CIhttps://www.nku.edu/~christensen/1402%20Hill%20cipher%20part%20II.pdf</br>
+
+[2].Unknown (S.D).  Math  5410 Homework Assignement 3.[En ligne] Disponible :http://math.ucdenver.edu/~wcherowi/courses/m5410/m5410hw3.html#ans1.2</br>
+
+[3]. Proof of Concept (2020). Cryptanalysis of Vigenere cipher.[En ligne] Disponible : https://www.youtube.com/watch?v=QgHnr8-h0xI&t=2s</br>
+
+[4]. Wikipédia. (2022). Fréquence d'apparition des lettres. [En ligne] Disponible : https://fr.wikipedia.org/wiki/Fréquence_d%27apparition_des_lettres
 
 
 
