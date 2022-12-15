@@ -101,7 +101,7 @@ def substitution(texttodecode):
 
     print("\nEnter second phase")
 
-    with open('dictionnary.data', 'rb') as filehandle:
+    with open('../data/dictionnary.data', 'rb') as filehandle:
         dictionnary_words = pickle.load(filehandle)
 
     cnt, total = count_correct_words(best_trad, dictionnary_words)
