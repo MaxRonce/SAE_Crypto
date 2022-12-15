@@ -3,12 +3,15 @@ import is_french
 from caesar import *
 from vigenere import *
 from affine import *
+from substitution import *
 import hill_optimised as hill
-#import hill
+
+
+# import hill
 
 
 def choice_input(remaining_text):
-    try :
+    try:
         choice = int(input(f"Quel texte est le français ? {remaining_text} : "))
         if choice not in remaining_text:
             raise ValueError
@@ -16,6 +19,8 @@ def choice_input(remaining_text):
         print("Choix invalide")
         return choice_input(remaining_text)
     return choice
+
+
 def main():
     parent_path = file.get_parent_path()
     print("--------------------")
@@ -38,7 +43,7 @@ def main():
     remaining_text.remove(choice)
     print(f"Texte non identifiés restants : {remaining_text}")
 
-    #Try all text with affine 2nd
+    # Try all text with affine 2nd
     print("--------------------")
     print("Affine : ")
     all_decrypted = []
@@ -58,14 +63,14 @@ def main():
     remaining_text.remove(choice)
     french_text = all_decrypted[choice - 1]
 
-    #insert punctuation
+    # insert punctuation
     punctuation = file.open_file(parent_path + f"/data/Punctuation/Punctuation_{choice}.json", return_type="Json")
     unciphered_text = insert_punctuation(french_text, punctuation)
     file.write_file(parent_path + f"/out/Texte{choice}_decrypted.txt", unciphered_text)
     print(f"Texte {choice} déchiffré : {unciphered_text}")
     print(f"Texte non identifiés restants : {remaining_text}")
 
-    #try all text with vigenere 3rd
+    # try all text with vigenere 3rd
     print("--------------------")
     print("Vigenere : ")
     all_decrypted = []
@@ -80,7 +85,7 @@ def main():
         punctuation = file.open_file(parent_path + f"/data/Punctuation/Punctuation_{text_num}.json", return_type="Json")
         unciphered_text = insert_punctuation(unciphered_text, punctuation)
         print(f"Texte{text_num} : {unciphered_text}")
-        all_decrypted.append((unciphered_text,key,key_len))
+        all_decrypted.append((unciphered_text, key, key_len))
 
     choice = choice_input(remaining_text)
     remaining_text.remove(choice)
@@ -90,7 +95,7 @@ def main():
     print(f"Texte {choice} déchiffré : {french_text}, \n clé : {all_decrypted[choice - 2][1]}")
     print(f"Texte non identifiés restants : {remaining_text}")
 
-    #try all text with HILL 4th
+    # try all text with HILL 4th
 
     print("--------------------")
     print("HILL : ")
@@ -100,7 +105,7 @@ def main():
     for text_num in remaining_text:
         print(" ")
         text = file.open_file(parent_path + f"/data/Texte{text_num}.txt")
-        unciphered_text = hill.main(text) #note that the text is already clean and have punctuation
+        unciphered_text = hill.main(text)  # note that the text is already clean and have punctuation
         all_decrypted.append(unciphered_text)
         print(f"Texte{text_num} : {unciphered_text}")
 
@@ -112,11 +117,17 @@ def main():
     print(f"Texte {choice} déchiffré : {french_text}")
     print(f"Texte non identifiés restants : {remaining_text}")
 
-    #try all text with Substitution 5th
+    # try all text with Substitution 5th
     print("--------------------")
-    print("Substitution : TO BE IMPLEMENTED")
-    print("WIP")
-    print("Par déduction, le texte 5 est chiffré avec la subsitution")
+    print("Substitution :")
+    print("WARNING : L'algorithme de Substitution est très long à calculer, vous pouvez maintenant boire votre café")
+
+    unciphered_text = substitution(file.open_file(parent_path + "/data/Texte5.txt"))
+    print("Texte 5 : ", unciphered_text)
+    file.write_file(parent_path + f"/out/Texte5_decrypted.txt", unciphered_text)
+    print("-" * 50)
+    print("fin du programme")
+
 
 if __name__ == "__main__":
     main()
