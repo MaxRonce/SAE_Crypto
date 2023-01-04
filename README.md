@@ -346,6 +346,86 @@ Temps de création des process : 20.89210219099219 secondes</br>
 [4]. Wikipédia. (2022). Fréquence d'apparition des lettres. [En ligne] Disponible : https://fr.wikipedia.org/wiki/Fréquence_d%27apparition_des_lettres
 
 
+#Rendu 2:
+
+## SAE CRYPTOGRAPHIE DEFI 1 - SUBSTITUTION 
+### Auteurs:
+- REYDET Antonin
+- RONCERAY Maxime
+
+### Description:
+Ce programme permet de déchiffrer un message en utilisant la méthode de substitution.
+
+### Utilisation:
+Afin de lancer ce programme il faut executer la la commande suivante depuis le répertoire ```src```:
+```bash
+python3 src/substitution.py
+```
+
+### Fonctionnement:
+Le programme s'articule autout de plusieurs fonctions.
+
+Cependant celui-ci use afin de trouver le texte le plus français d'une approche probabiliste.
+Tout d'abord le script du fichier ```src/creationdico``` va lire le fichier ```data/liste.de.mots.francais.frgut.txt``` et va en créer un dictionnaire.
+Ce dictionnaire va contenir les mots du fichier ```data/liste.de.mots.francais.frgut.txt```  qui est un dictionnaire des mots français.
+
+- Ensuite le script ```bigramscreator.py``` va lire un texte en français, ici le livre 'du côté de chez Swann'. De cette lecture il en ressort deux fichiers, le premier  ```data/bigrams.dat``` qui contient pour chaque lettre la probabilité d'apparition de la lettre suivante pour un texte écrit en français, donc en généralisant pour la langue française.
+
+ 
+- Le second fichier lui est le fichier ```data/bigrams.png``` qui est un graphique représentant les probabilités contenues dans le fichier énoncé précédemment.
+
+
+- Pour lire ce diagramme il faut comprendre que plus le carré de couleur tend vers le jaune plus la probabilité est grande. (à noté qu'ici le livre utilisé comme source à pour protagoniste une denommé 'Swann' la probabilité que la lettre 'a' suive la lettre 'w' apparait comme extrêmement probable, alors que ce n'est pas le cas dans la langue française. Cependant cela ne gênera pas les simulations.). 
+
+L'approche utilisée pour déchiffrer le message est la suivante:
+- On va lire le message chiffré caractère par caractère.
+- Pour chaque caractère on va calculer la probabilité que la lettre suivante apparaisse.
+- On la compare à la probabilité que la lettre suivante apparaisse dans le texte français.
+- On va ensuite calculer la différence entre les deux probabilités.
+- Puis on répète le processus en changeant l'échange de deux lettre dans notre clé de chiffrement hypothétique.
+- Dans cet algorithme nous le faisons une première fois afin d'obtenir un premier résultat comprenant à peu près 50% de mots français.
+- Puis nous le faisons une deuxième fois afin d'obtenir un résultat comprenant à peu près 80% de mots français ce qui permet de décrypter le plus souvent le message dans son intégralité, ou en tous cas dans sa grande globalité.
+
+### Résultat:
+Le résultat obtenu est le suivant:
+```
+Le message est: IL MIT LA RADIO UN AIR AFRO CUBAIN FUT SUIVI D UN BOSTON PUIS UN TANGO PUIS UN FOX TROT PUIS UN COTILLON MIS AU GOUT DU JOUR DUTRONC CHANTA DU LANZMANN BARBARA UN MADRIGAL D ARAGON STICH RANDALL UN AIR D AIDA 
+```
+
+### Problèmes:
+- Le programme ne fonctionne pas toujours, il est possible que le message ne soit pas déchiffré correctement,
+ceci est dû à la nature probabiliste de l'algorithme.
+
+Il est possible que selon les simulations l'algorithme pense mélange l'alphabet de manière défavorable au dechiffrement du message, ce qui mène souvent à un message décrypté à seulement une cinquantaine de pourcent.
+
+### Améliorations possibles:
+
+- Il serait possible d'ajouter un dictionnaire de mots anglais afin de pouvoir déchiffrer des messages en anglais.
+- Il serait possible de par exemple executer l'algorithme 5 fois et de proposer les 5 messages possibles et de laisser le choix à l'utilisateur pour le texte se rapportant le plus au message voulu.
+
+### Conclusion:
+
+- Cette méthode de chiffrement est complexe à casser en force brut, seulement via une approche probabiliste celui-ci devient tout de suite beaucoup plus abordable dans son déchiffrement.
+
+### Sources:
+
+- https://github.com/scienceetonnante/MCMC
+
+
+## SAE CRYPTOGRAPHIE DEFI 2
+
+### How to use 
+
+- BSGS.py propose un code dans lequel on génère un problème de log discret puis ou l'on le casse$
+Changez la ligne 30 si le programme met trop de temps a run (dépend de la puissance du pc utilisé)
+
+- DH_Key_Exchange propose de générer 2 clés privés communes a partir d'un p,d'un n et 2 clés privés uniques
+Changez la ligne 51 (remplacer le 10^200 en 10^50) si le programme met trop de temps a run (dépend de la puissance du pc utilisé)
+
+- DLP.py met en oeuvre un processus dans lequel nous cassons et montront qu'il est possible de 
+trouver les clés privés communes dans un échange de Diffie-Hellman a partir des valeurs publiques d'Alice et Bob.
+
+- plot.py est le fichier permettant de faire les graphiques utilisés dans le raport.
 
 
 
